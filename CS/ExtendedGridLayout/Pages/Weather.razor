@@ -1,0 +1,66 @@
+﻿@page "/Weather"
+
+@using System.Text.Json
+@using ExtendedGridLayout.Data
+@inject WeatherForecastService ForecastService
+@inject LocalStorageHelper LocalStorage
+
+<DxGrid @ref="GridRef"
+        Data="@Forecasts"
+        ColumnResizeMode="GridColumnResizeMode.NextColumn"
+        PageSizeSelectorVisible="true"
+        PageSizeSelectorAllRowsItemVisible="true"
+        ShowGroupPanel="ShowGroupPanel"
+        ShowSearchBox="ShowSearchBox"
+        ShowFilterRow="ShowFilterRow">
+        <Columns>
+            <DxGridDataColumn Caption="Date" FieldName="Date" />
+            <DxGridDataColumn Caption="Temperature C" FieldName="TemperatureC" />
+            <DxGridDataColumn Caption="Temperature F" FieldName="TemperatureF" Visible="false" />
+            <DxGridDataColumn Caption="Summary" FieldName="Summary" />
+        </Columns>
+        <ToolbarTemplate Context="ToolbarContext">
+            <DxToolbar>
+                <DxToolbarItem @bind-Checked="@ShowFilterRow" Text="Filter Row" GroupName="FilterRow" />
+                <DxToolbarItem @bind-Checked="@ShowGroupPanel" Text="Group Panel" GroupName="GroupPanel" />
+                <DxToolbarItem @bind-Checked="@ShowSearchBox" Text="Search Box" GroupName="SearchBox" />
+                <DxToolbarItem Text="Column Chooser" BeginGroup="true" Click="OnShowColumnChooser" />
+                <DxToolbarItem Text="Save Layout" BeginGroup="true" Click="OnSaveLayout" Alignment="ToolbarItemAlignment.Right" />
+                <DxToolbarItem Text="Load Layout" Click="OnLoadLayout" />
+            </DxToolbar>
+        </ToolbarTemplate>
+</DxGrid>
+
+@code {
+    WeatherForecast[] Forecasts { get; set; }
+    IGrid GridRef { get; set; }
+    bool ShowFilterRow { get; set; } = true;
+    bool ShowGroupPanel { get; set; } = true;
+    bool ShowSearchBox { get; set; } = true;
+    UserLayout GridLayout { get; set; }
+    const string LocalStorageItemsKey = "sampleItemsKey";
+
+    protected override async Task OnInitializedAsync() {
+        Forecasts = await ForecastService.GetForecastAsync(DateOnly.FromDateTime(DateTime.Now));
+        var json = await LocalStorage.GetItemAsync(LocalStorageItemsKey);
+        if (!string.IsNullOrEmpty(json)) {
+            GridLayout = JsonSerializer.Deserialize<UserLayout>(json);
+        }
+    }
+    void OnShowColumnChooser() {
+        GridRef.ShowColumnChooser();
+    }
+    async void OnSaveLayout() {
+        GridLayout = new UserLayout() {
+                LayoutKey = "Layout " + DateTime.Now.ToString(),
+                Layout = new GridExtendedLayout(GridRef.SaveLayout(), ShowFilterRow, ShowGroupPanel, ShowSearchBox)
+            };
+        await LocalStorage.SetItemAsync(LocalStorageItemsKey, JsonSerializer.Serialize(GridLayout));
+    }
+    void OnLoadLayout() {
+        GridRef.LoadLayout(GridLayout.Layout.Layout);
+        ShowFilterRow = GridLayout.Layout.FilterRowVisible;
+        ShowGroupPanel = GridLayout.Layout.GroupPanelVisible;
+        ShowSearchBox = GridLayout.Layout.SearchBoxVisible;
+    }
+}
