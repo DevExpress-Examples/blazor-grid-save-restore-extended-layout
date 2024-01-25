@@ -50,7 +50,7 @@
     void OnShowColumnChooser() {
         GridRef.ShowColumnChooser();
     }
-    async void OnSaveLayout() {
+    async Task OnSaveLayout() {
         GridLayout = new GridExtendedLayout(GridRef.SaveLayout(), ShowFilterRow, ShowGroupPanel, ShowSearchBox);
         await LocalStorage.SetItemAsync(LocalStorageItemsKey, JsonSerializer.Serialize(GridLayout));
     }
