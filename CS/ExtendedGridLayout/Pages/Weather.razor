@@ -6,7 +6,7 @@
 @inject LocalStorageHelper LocalStorage
 
 <DxGrid @ref="GridRef"
-        Data="@Forecasts"
+        Data="Forecasts"
         ColumnResizeMode="GridColumnResizeMode.NextColumn"
         PageSizeSelectorVisible="true"
         PageSizeSelectorAllRowsItemVisible="true"
@@ -14,12 +14,12 @@
         ShowSearchBox="ShowSearchBox"
         ShowFilterRow="ShowFilterRow">
         <Columns>
-            <DxGridDataColumn Caption="Date" FieldName="Date" />
-            <DxGridDataColumn Caption="Temperature C" FieldName="TemperatureC" />
-            <DxGridDataColumn Caption="Temperature F" FieldName="TemperatureF" Visible="false" />
-            <DxGridDataColumn Caption="Summary" FieldName="Summary" />
+            <DxGridDataColumn FieldName="Date" />
+            <DxGridDataColumn FieldName="TemperatureC" />
+            <DxGridDataColumn FieldName="TemperatureF" Visible="false" />
+            <DxGridDataColumn FieldName="Summary" />
         </Columns>
-        <ToolbarTemplate Context="ToolbarContext">
+        <ToolbarTemplate>
             <DxToolbar>
                 <DxToolbarItem @bind-Checked="@ShowFilterRow" Text="Filter Row" GroupName="FilterRow" />
                 <DxToolbarItem @bind-Checked="@ShowGroupPanel" Text="Group Panel" GroupName="GroupPanel" />
@@ -34,35 +34,32 @@
 @code {
     WeatherForecast[] Forecasts { get; set; }
     IGrid GridRef { get; set; }
-    bool ShowFilterRow { get; set; } = false;
-    bool ShowGroupPanel { get; set; } = false;
-    bool ShowSearchBox { get; set; } = false;
-    UserLayout GridLayout { get; set; }
+    bool ShowFilterRow { get; set; }
+    bool ShowGroupPanel { get; set; }
+    bool ShowSearchBox { get; set; }
+    GridExtendedLayout GridLayout { get; set; }
     const string LocalStorageItemsKey = "sampleItemsKey";
 
     protected override async Task OnInitializedAsync() {
         Forecasts = await ForecastService.GetForecastAsync(DateOnly.FromDateTime(DateTime.Now));
         var json = await LocalStorage.GetItemAsync(LocalStorageItemsKey);
         if (!string.IsNullOrEmpty(json)) {
-            GridLayout = JsonSerializer.Deserialize<UserLayout>(json);
+            GridLayout = JsonSerializer.Deserialize<GridExtendedLayout>(json);
         }
     }
     void OnShowColumnChooser() {
         GridRef.ShowColumnChooser();
     }
     async void OnSaveLayout() {
-        GridLayout = new UserLayout() {
-                LayoutKey = "Layout " + DateTime.Now.ToString(),
-                Layout = new GridExtendedLayout(GridRef.SaveLayout(), ShowFilterRow, ShowGroupPanel, ShowSearchBox)
-            };
+        GridLayout = new GridExtendedLayout(GridRef.SaveLayout(), ShowFilterRow, ShowGroupPanel, ShowSearchBox);
         await LocalStorage.SetItemAsync(LocalStorageItemsKey, JsonSerializer.Serialize(GridLayout));
     }
     void OnLoadLayout() {
         if (GridLayout != null) {
-            GridRef.LoadLayout(GridLayout.Layout.Layout);
-            ShowFilterRow = GridLayout.Layout.FilterRowVisible;
-            ShowGroupPanel = GridLayout.Layout.GroupPanelVisible;
-            ShowSearchBox = GridLayout.Layout.SearchBoxVisible;
+            GridRef.LoadLayout(GridLayout.Layout);
+            ShowFilterRow = GridLayout.FilterRowVisible;
+            ShowGroupPanel = GridLayout.GroupPanelVisible;
+            ShowSearchBox = GridLayout.SearchBoxVisible;
         }
     }
 }

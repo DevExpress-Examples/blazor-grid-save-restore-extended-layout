@@ -7,7 +7,7 @@ namespace ExtendedGridLayout.Data {
         public LocalStorageHelper(IJSRuntime JSRuntime) {
             _JSRuntime = JSRuntime;
         }
-        public  async Task<string> GetItemAsync(string key) {
+        public async Task<string> GetItemAsync(string key) {
             try {
                 return await _JSRuntime.InvokeAsync<string>("localStorage.getItem", key);
             }
