@@ -34,9 +34,9 @@
 @code {
     WeatherForecast[] Forecasts { get; set; }
     IGrid GridRef { get; set; }
-    bool ShowFilterRow { get; set; } = true;
-    bool ShowGroupPanel { get; set; } = true;
-    bool ShowSearchBox { get; set; } = true;
+    bool ShowFilterRow { get; set; } = false;
+    bool ShowGroupPanel { get; set; } = false;
+    bool ShowSearchBox { get; set; } = false;
     UserLayout GridLayout { get; set; }
     const string LocalStorageItemsKey = "sampleItemsKey";
 
@@ -58,9 +58,11 @@
         await LocalStorage.SetItemAsync(LocalStorageItemsKey, JsonSerializer.Serialize(GridLayout));
     }
     void OnLoadLayout() {
-        GridRef.LoadLayout(GridLayout.Layout.Layout);
-        ShowFilterRow = GridLayout.Layout.FilterRowVisible;
-        ShowGroupPanel = GridLayout.Layout.GroupPanelVisible;
-        ShowSearchBox = GridLayout.Layout.SearchBoxVisible;
+        if (GridLayout != null) {
+            GridRef.LoadLayout(GridLayout.Layout.Layout);
+            ShowFilterRow = GridLayout.Layout.FilterRowVisible;
+            ShowGroupPanel = GridLayout.Layout.GroupPanelVisible;
+            ShowSearchBox = GridLayout.Layout.SearchBoxVisible;
+        }
     }
 }
