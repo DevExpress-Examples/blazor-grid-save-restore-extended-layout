@@ -28,8 +28,8 @@ Loads saved layout settings from the [local storage](https://developer.mozilla.o
 ## Files to Review
 
 - [Weather.razor](./CS/ExtendedGridLayout/Pages/Weather.razor)
+- [GridExtendedLayout.cs](./CS/ExtendedGridLayout/Data/GridExtendedLayout.cs)
 - [LocalStorageHelper.cs](./CS/ExtendedGridLayout/Data/LocalStorageHelper.cs)
-- [UserLayout.cs](./CS/ExtendedGridLayout/Data/UserLayout.cs)
 - [Program.cs](./CS/ExtendedGridLayout/Program.cs)
 
 ## Documentation
