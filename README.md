@@ -2,28 +2,40 @@
 [![](https://img.shields.io/badge/Open_in_DevExpress_Support_Center-FF7200?style=flat-square&logo=DevExpress&logoColor=white)](https://supportcenter.devexpress.com/ticket/details/T1212928)
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 <!-- default badges end -->
-# Product/Platform - Task
+# Grid for Blazor - Save and restore extended layout information
 
-This is the repository template for creating new examples. Describe the solved task here.
+The DevExpress [Blazor Grid](https://docs.devexpress.com/Blazor/403143/components/grid) allows you to save layout information between application sessions. This information includes only the settings that a user can change in the built-in UI. This example illustrates how to extend the default layout object and save additional information about the Grid layout.
 
-Put a screenshot that illustrates the result here.
+![Save and Restore Extended Layout ](save-restore-extended-layout.gif)
 
-Then, add implementation details (steps, code snippets, and other technical information in a free form), or add a link to an existing document with implementation details. 
+In this example, the Grid displays the following buttons in the [toolbar](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ToolbarTemplate):
+
+**Filter Row**  
+Changes the [ShowFilterRow](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ShowFilterRow) property value.
+
+**Group Panel**  
+Changes the [ShowGroupPanel](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ShowGroupPanel) property value.
+
+**Search Box**  
+Changes the [ShowSearchBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ShowSearchBox) property value.
+
+**Save Layout**  
+Saves default layout object and values of [ShowFilterRow](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ShowFilterRow), [ShowGroupPanel](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ShowGroupPanel), and [ShowSearchBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ShowSearchBox) properties to the [local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
+
+**Load Layout**  
+Loads saved layout settings from the [local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) and applies them to the Grid.
 
 ## Files to Review
 
-- link.cs (VB: link.vb)
-- link.js
-- ...
+- [Weather.razor](./CS/ExtendedGridLayout/Pages/Weather.razor)
+- [LocalStorageHelper.cs](./CS/ExtendedGridLayout/Data/LocalStorageHelper.cs)
+- [UserLayout.cs](./CS/ExtendedGridLayout/Data/UserLayout.cs)
+- [Program.cs](./CS/ExtendedGridLayout/Program.cs)
 
 ## Documentation
 
-- link
-- link
-- ...
+* [GridPersistentLayout](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.LoadLayout(DevExpress.Blazor.GridPersistentLayout))
 
 ## More Examples
 
-- link
-- link
-- ...
+- [Grid for Blazor - Save and load layout information](https://github.com/DevExpress-Examples/blazor-DxGrid-save-restore-layout)
