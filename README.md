@@ -26,7 +26,7 @@ Shows the [column chooser](https://docs.devexpress.com/Blazor/DevExpress.Blazor.
 Saves default layout object and values of [ShowFilterRow](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ShowFilterRow), [ShowGroupPanel](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ShowGroupPanel), and [ShowSearchBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ShowSearchBox) properties to the [local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 
 **Load Layout**  
-Loads saved layout settings from the [local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) and applies them to the Grid.
+Loads layout settings from the [local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) and applies them to the Grid.
 
 ## Files to Review
 
