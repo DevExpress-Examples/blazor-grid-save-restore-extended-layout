@@ -4,7 +4,7 @@
 <!-- default badges end -->
 # Grid for Blazor - Save and load extended information about the Grid layout
 
-The DevExpress [Blazor Grid](https://docs.devexpress.com/Blazor/403143/components/grid) allows you to save layout information between application sessions. This information includes only the settings that a user can change in the built-in UI. This example illustrates how to extend the default layout object and save additional information about the Grid layout.
+The DevExpress [Blazor Grid](https://docs.devexpress.com/Blazor/403143/components/grid) allows you to save layout information between application sessions. This information includes only settings that a user can change in the built-in UI. This example illustrates how to extend the default layout object and save additional information about the Grid layout.
 
 ![Save and Restore Extended Layout ](save-restore-extended-layout.gif)
 
